@@ -9,7 +9,7 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 
     Teacher findByEmail(String email);
 
-    List<Teacher> findByDepartmentId(Long departmentId);
+    List<Teacher> findByDepartment_Id(Long departmentId);
 
-    Long countByDepartmentId(Long departmentId);
+    Long countByDepartment_Id(Long departmentId);
 }

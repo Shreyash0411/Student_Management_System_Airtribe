@@ -8,16 +8,16 @@ import java.util.List;
 
 public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
 
-    List<Enrollment> findByCourseId(Long courseId);
+    List<Enrollment> findByCourse_Id(Long courseId);
 
-    List<Enrollment> findByCourseIdAndStatus(Long courseId, Status status);
+    List<Enrollment> findByCourse_IdAndStatus(Long courseId, Status status);
 
-    List<Enrollment> findByStudentIdAndStatus(Long studentId, Status status);
+    List<Enrollment> findByStudent_IdAndStatus(Long studentId, Status status);
 
-    Enrollment findByStudentIdAndCourseId(Long studentId, Long courseId);
+    Enrollment findByStudent_IdAndCourse_Id(Long studentId, Long courseId);
 
-    List<Enrollment> findByStudentId(Long studentId);
+    List<Enrollment> findByStudent_Id(Long studentId);
 
-    Long CountByCourseIdAndStatus(Long courseId, Status status);
-
+    Long countByCourse_IdAndStatus(Long courseId, Status status);
 }
+

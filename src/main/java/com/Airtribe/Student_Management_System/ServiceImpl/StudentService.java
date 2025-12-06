@@ -124,7 +124,7 @@ public class StudentService implements IStudentService {
 
     @Override
     public List<Student> getAllStudentsByDepartment(Long departmentId) {
-        List<Student> students = studentRepository.findByDepartmentId(departmentId);
+        List<Student> students = studentRepository.findByDepartment_Id(departmentId);
 
         return students;
     }

@@ -66,7 +66,7 @@ public class TeacherService implements ITeacherService {
 
     @Override
     public List<Teacher> getTeachersByDepartment(Long departmentId) {
-        List<Teacher> teachers = teacherRepository.findByDepartmentId(departmentId);
+        List<Teacher> teachers = teacherRepository.findByDepartment_Id(departmentId);
         if (!teachers.isEmpty()) {
             return teachers;
         }
@@ -100,6 +100,6 @@ public class TeacherService implements ITeacherService {
 
     @Override
     public List<Course> getCoursesTaughtByTeacher(long id) {
-        return courseRepository.findByTeacherId(id);
+        return courseRepository.findByTeacher_Id(id);
     }
 }

@@ -37,7 +37,7 @@ public class EnrollmentService implements IEnrollmentService
         if (course.isEmpty())
             throw new Exception("Course does not exist with that id" + courseId);
 
-        Enrollment existingEnrollment = enrollmentRepository.findByStudentIdAndCourseId(studentId, courseId);
+        Enrollment existingEnrollment = enrollmentRepository.findByStudent_IdAndCourse_Id(studentId, courseId);
         if(existingEnrollment != null)
             throw new Exception("Student is already enrolled in the course");
 
@@ -52,7 +52,7 @@ public class EnrollmentService implements IEnrollmentService
 
     @Override
     public Enrollment changeEnrollmentStatus(Long studentId, Long courseId, Status status) throws Exception {
-        Enrollment enrollment = enrollmentRepository.findByStudentIdAndCourseId(studentId, courseId);
+        Enrollment enrollment = enrollmentRepository.findByStudent_IdAndCourse_Id(studentId, courseId);
         if(enrollment != null) {
             enrollment.setStatus(status);
             return enrollmentRepository.save(enrollment);
@@ -62,7 +62,7 @@ public class EnrollmentService implements IEnrollmentService
 
     @Override
     public List<Enrollment> getEnrollmentsByStudent(Long studentId) {
-        List<Enrollment> enrollments = enrollmentRepository.findByStudentId(studentId);
+        List<Enrollment> enrollments = enrollmentRepository.findByStudent_Id(studentId);
         if(!enrollments.isEmpty())
             return enrollments;
         return List.of();
@@ -70,7 +70,7 @@ public class EnrollmentService implements IEnrollmentService
 
     @Override
     public List<Enrollment> getEnrollmentsByCourse(Long courseId) {
-        List<Enrollment> enrollments = enrollmentRepository.findByCourseId(courseId);
+        List<Enrollment> enrollments = enrollmentRepository.findByCourse_Id(courseId);
         if(!enrollments.isEmpty())
             return enrollments;
         return List.of();
@@ -78,7 +78,7 @@ public class EnrollmentService implements IEnrollmentService
 
     @Override
     public List<Student> getActiveStudentsByCourse(Long courseId) {
-        List<Enrollment> enrollments = enrollmentRepository.findByCourseIdAndStatus(courseId, Status.Active);
+        List<Enrollment> enrollments = enrollmentRepository.findByCourse_IdAndStatus(courseId, Status.Active);
         if(!enrollments.isEmpty())
             return enrollments.stream().map(Enrollment::getStudent).toList();
         return List.of();

@@ -9,9 +9,9 @@ public interface StudentRepository  extends JpaRepository<Student, Long>
 {
     Student findByEmail(String email);
 
-    List<Student> findByDepartmentId(Long departmentId);
+    List<Student> findByDepartment_Id(Long departmentId);
 
     Student findByRollNumber(String rollNumber);
 
-    long countByDepartmentId(Long departmentId);
+    long countByDepartment_Id(Long departmentId);
 }

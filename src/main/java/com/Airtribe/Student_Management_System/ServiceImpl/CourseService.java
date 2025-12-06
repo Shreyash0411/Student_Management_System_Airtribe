@@ -84,7 +84,7 @@ public class CourseService implements ICourseService
             return "Course does not exist with that id";
         }
 
-        List<Enrollment> enrollments = enrollmentRepository.findByCourseIdAndStatus(id, Status.Active);
+        List<Enrollment> enrollments = enrollmentRepository.findByCourse_IdAndStatus(id, Status.Active);
         if (!enrollments.isEmpty()) {
             return "Course has active enrolled students and cannot be deleted";
         }
@@ -95,7 +95,7 @@ public class CourseService implements ICourseService
     @Override
     public List<Course> getCoursesByDepartment(Long departmentId) {
 
-        List<Course> courses = courseRepository.findByDepartmentId(departmentId);
+        List<Course> courses = courseRepository.findByDepartment_Id(departmentId);
         if (!courses.isEmpty()) {
             return courses;
         }
@@ -115,7 +115,7 @@ public class CourseService implements ICourseService
     @Override
     public List<Course> getCoursesByTeacher(Long teacherId) {
 
-        List<Course> courses = courseRepository.findByTeacherId(teacherId);
+        List<Course> courses = courseRepository.findByTeacher_Id(teacherId);
         if (!courses.isEmpty()) {
             return courses;
         }
@@ -144,7 +144,7 @@ public class CourseService implements ICourseService
     @Override
     public List<Student> getStudentEnrolledInCourse(Long courseId) {
 
-        List<Enrollment> enrollments = enrollmentRepository.findByCourseIdAndStatus(courseId, Status.Active);
+        List<Enrollment> enrollments = enrollmentRepository.findByCourse_IdAndStatus(courseId, Status.Active);
         if (!enrollments.isEmpty()) {
             var res =  enrollments.stream().map(Enrollment::getStudent).toList();
             return res;

@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface CourseRepository  extends JpaRepository<Course,Long> {
 
-    List<Course> findByTeacherId(Long id);
+    List<Course> findByTeacher_Id(Long id);
 
     Course findByCourseCode(String courseCode);
 
-    List<Course> findByDepartmentId(Long departmentId);
+    List<Course> findByDepartment_Id(Long departmentId);
 
-    Long countByDepartmentId(Long departmentId);
+    Long countByDepartment_Id(Long departmentId);
 }
