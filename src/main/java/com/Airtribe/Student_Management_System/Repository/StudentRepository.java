@@ -12,4 +12,6 @@ public interface StudentRepository  extends JpaRepository<Student, Long>
     List<Student> findByDepartmentId(Long departmentId);
 
     Student findByRollNumber(String rollNumber);
+
+    long countByDepartmentId(Long departmentId);
 }

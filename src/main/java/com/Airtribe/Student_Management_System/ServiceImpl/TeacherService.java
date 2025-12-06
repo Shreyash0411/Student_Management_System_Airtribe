@@ -6,10 +6,12 @@ import com.Airtribe.Student_Management_System.Repository.CourseRepository;
 import com.Airtribe.Student_Management_System.Repository.TeacherRepository;
 import com.Airtribe.Student_Management_System.Service.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class TeacherService implements ITeacherService {
 
     @Autowired
@@ -75,9 +77,6 @@ public class TeacherService implements ITeacherService {
     public Teacher updateTeacher(Long id, Teacher teacher) throws Exception {
 
         Optional<Teacher> optionalTeacher = teacherRepository.findById(id);
-       if (!optionalTeacher.isPresent()) {
-            throw new Exception("Teacher does not exist with that id" + id);
-        }
        Teacher existingTeacher = optionalTeacher.get();
         existingTeacher.setFirstName(teacher.getFirstName());
         existingTeacher.setLastName(teacher.getLastName());

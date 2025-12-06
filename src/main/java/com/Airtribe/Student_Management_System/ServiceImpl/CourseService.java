@@ -10,10 +10,12 @@ import com.Airtribe.Student_Management_System.Repository.EnrollmentRepository;
 import com.Airtribe.Student_Management_System.Repository.TeacherRepository;
 import com.Airtribe.Student_Management_System.Service.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class CourseService implements ICourseService
 {
 

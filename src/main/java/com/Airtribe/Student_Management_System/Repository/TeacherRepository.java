@@ -11,4 +11,5 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 
     List<Teacher> findByDepartmentId(Long departmentId);
 
+    Long countByDepartmentId(Long departmentId);
 }

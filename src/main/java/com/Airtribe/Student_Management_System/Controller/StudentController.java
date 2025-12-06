@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/student")
 public class StudentController
 {
     @Autowired
@@ -20,19 +21,19 @@ public class StudentController
         return new ResponseEntity<>(newStudent,HttpStatus.OK);
     }
 
-    @GetMapping("/student/id/{studentId}")
+    @GetMapping("/id/{studentId}")
     public ResponseEntity<Student> findStudentById(@PathVariable Long studentId) throws Exception{
         Student student = studentService.findStudentById(studentId);
         return new ResponseEntity<>(student,HttpStatus.OK);
     }
 
-    @GetMapping("/student/email/{email}")
+    @GetMapping("/email/{email}")
     public ResponseEntity<Student> findStudentByEmail(@PathVariable String email) throws Exception{
         Student student = studentService.findStudentByEmail(email);
         return new ResponseEntity<>(student,HttpStatus.OK);
     }
 
-    @GetMapping("/student/rollNumber/{rollNumber}")
+    @GetMapping("/rollNumber/{rollNumber}")
     public ResponseEntity<Student> findStudentByRollNumber(@PathVariable String rollNumber) throws Exception{
         Student student = studentService.findStudentByRolllNumber(rollNumber);
         return new ResponseEntity<>(student,HttpStatus.OK);

@@ -6,11 +6,11 @@ import com.Airtribe.Student_Management_System.Helper.Status;
 
 import java.util.List;
 
-public interface IEnrollmentCourse {
+public interface IEnrollmentService {
     // make sure to make the enrollment unique
-    Enrollment enrollStudentInCourse(Long studentId, Long courseId);
+    Enrollment enrollStudentInCourse(Long studentId, Long courseId) throws Exception;
 
-    Enrollment changeEnrollmentStatus(Long studentId, Long courseId, Status status);
+    Enrollment changeEnrollmentStatus(Long studentId, Long courseId, Status status) throws Exception;
 
     List<Enrollment> getEnrollmentsByStudent(Long studentId);
 
