@@ -2,18 +2,19 @@ package com.Airtribe.Student_Management_System.Service;
 
 import com.Airtribe.Student_Management_System.Entity.Course;
 import com.Airtribe.Student_Management_System.Entity.Student;
+import com.Airtribe.Student_Management_System.Helper.CourseRequestDTO;
 
 import java.util.List;
 
 public interface ICourseService
 {
-    Course createNewCourse(Course course);
+    Course createNewCourse(CourseRequestDTO course);
 
     Course getCourseById(Long Id) throws Exception;
 
     List<Course> getAllCourses();
 
-    Course updateCourse(Long id, Course course) throws Exception;
+    Course updateCourse(Long id, CourseRequestDTO course) throws Exception;
 
     String deleteCourse(Long id);
 

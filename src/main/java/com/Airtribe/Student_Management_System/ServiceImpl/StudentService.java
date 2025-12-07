@@ -1,6 +1,9 @@
 package com.Airtribe.Student_Management_System.ServiceImpl;
 
 import com.Airtribe.Student_Management_System.Entity.Student;
+import com.Airtribe.Student_Management_System.Helper.Gender;
+import com.Airtribe.Student_Management_System.Helper.StudentRequestDTO;
+import com.Airtribe.Student_Management_System.Repository.DepartmentRepository;
 import com.Airtribe.Student_Management_System.Repository.StudentRepository;
 import com.Airtribe.Student_Management_System.Service.IStudentService;
 import org.springframework.beans.BeanUtils;
@@ -18,8 +21,11 @@ public class StudentService implements IStudentService {
     @Autowired
     private StudentRepository studentRepository;
 
+    @Autowired
+    private DepartmentRepository departmentRepository;
+
     @Override
-    public Student createNewStudent(Student student) {
+    public Student createNewStudent(StudentRequestDTO student) {
         Student newStudent = new Student();
 
         newStudent.setFirstName(student.getFirstName());
@@ -28,8 +34,21 @@ public class StudentService implements IStudentService {
         newStudent.setPhoneNo(student.getPhoneNo());
         newStudent.setBirthDate(student.getBirthDate());
         newStudent.setRollNumber(student.getRollNumber());
-        newStudent.setGender(student.getGender());
-        newStudent.setDepartment(student.getDepartment());
+        if (student.getGender() != null) {
+            try {
+               if (student.getGender().equalsIgnoreCase("male")){
+                   newStudent.setGender(Gender.MALE);
+               }
+               if (student.getGender().equalsIgnoreCase("female")){
+                   newStudent.setGender(Gender.FEMALE);
+               }
+            } catch (IllegalArgumentException e) {
+                throw new RuntimeException("Invalid gender value: " + student.getGender());
+            }
+        }
+        if (student.getDepartmentId() != 0) {
+            newStudent.setDepartment(departmentRepository.findById(student.getDepartmentId()).get());
+        }
         LocalDateTime createdAt = LocalDateTime.now();
         newStudent.setCreatedAt(createdAt);
 
@@ -65,9 +84,8 @@ public class StudentService implements IStudentService {
    }
 
     @Override
-    public Student updateStudent(Long studentId, Student student) throws Exception {
+    public Student updateStudent(Long studentId, StudentRequestDTO student) throws Exception {
         Optional<Student> currentStudent = studentRepository.findById(studentId);
-
         if (currentStudent.isEmpty()) {
             throw new Exception("Student not found with id: " + studentId);
         }
@@ -99,11 +117,20 @@ public class StudentService implements IStudentService {
         }
 
         if (student.getGender() != null) {
-            oldStudent.setGender(student.getGender());
+            try {
+                if (student.getGender().equalsIgnoreCase("male")) {
+                    oldStudent.setGender(Gender.MALE);
+                }
+                if (student.getGender().equalsIgnoreCase("female")){
+                oldStudent.setGender(Gender.FEMALE);
+                }
+            } catch (IllegalArgumentException e) {
+                throw new RuntimeException("Invalid gender value: " + student.getGender());
+            }
         }
 
-        if (student.getDepartment() != null) {
-            oldStudent.setDepartment(student.getDepartment());
+        if (student.getDepartmentId() != 0) {
+            oldStudent.setDepartment(departmentRepository.findById(student.getDepartmentId()).get());
         }
 
         LocalDateTime modifyAt = LocalDateTime.now();

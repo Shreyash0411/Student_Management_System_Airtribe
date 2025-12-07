@@ -1,6 +1,8 @@
 package com.Airtribe.Student_Management_System.Entity;
 
 import com.Airtribe.Student_Management_System.Helper.Gender;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -26,9 +28,11 @@ public class Student {
 
     @ManyToOne
     @JoinColumn(name = "department_id")
+    @JsonBackReference("dept-students")
     private Department department;
 
     @OneToMany(mappedBy = "student")
+    @JsonManagedReference("student-enrollments")
     private List<Enrollment> enrollments = new ArrayList<>();
 
     LocalDateTime createdAt;

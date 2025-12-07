@@ -4,6 +4,7 @@ import com.Airtribe.Student_Management_System.Entity.Course;
 import com.Airtribe.Student_Management_System.Entity.Department;
 import com.Airtribe.Student_Management_System.Entity.Student;
 import com.Airtribe.Student_Management_System.Entity.Teacher;
+import com.Airtribe.Student_Management_System.Helper.DepartmentRequestDTO;
 import com.Airtribe.Student_Management_System.Repository.DepartmentRepository;
 import com.Airtribe.Student_Management_System.Service.IDepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class DepartmentService implements IDepartmentService {
     private DepartmentRepository departmentRepository;
 
     @Override
-    public Department createNewDepartment(Department department) {
+    public Department createNewDepartment(DepartmentRequestDTO department) {
         Department newDepartment = new Department();
 
         newDepartment.setName(department.getName());
@@ -58,7 +59,7 @@ public class DepartmentService implements IDepartmentService {
     }
 
     @Override
-    public Department updateDepartment(Long departmentId, Department department)  throws Exception {
+    public Department updateDepartment(Long departmentId, DepartmentRequestDTO department)  throws Exception {
         Optional<Department> currentDepartment = departmentRepository.findById(departmentId);
         if (currentDepartment.isEmpty()){
             throw new Exception("Department with that id not found");

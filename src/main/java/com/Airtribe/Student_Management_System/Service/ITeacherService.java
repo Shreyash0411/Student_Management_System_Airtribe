@@ -2,12 +2,13 @@ package com.Airtribe.Student_Management_System.Service;
 
 import com.Airtribe.Student_Management_System.Entity.Course;
 import com.Airtribe.Student_Management_System.Entity.Teacher;
+import com.Airtribe.Student_Management_System.Helper.TeacherRequestDTO;
 
 import java.util.List;
 
 public interface ITeacherService
 {
-    Teacher createTeacher(Teacher teacher);
+    Teacher createTeacher(TeacherRequestDTO teacher);
 
     Teacher getTeacherById(Long id) throws Exception;
 
@@ -17,7 +18,7 @@ public interface ITeacherService
 
     List<Teacher> getTeachersByDepartment(Long departmentId);
 
-    Teacher updateTeacher(Long id, Teacher teacher) throws Exception;
+    Teacher updateTeacher(Long id, TeacherRequestDTO teacher) throws Exception;
 
     String deleteTeacher(Long id);
 

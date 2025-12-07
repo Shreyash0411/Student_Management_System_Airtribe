@@ -4,6 +4,7 @@ import com.Airtribe.Student_Management_System.Entity.Course;
 import com.Airtribe.Student_Management_System.Entity.Department;
 import com.Airtribe.Student_Management_System.Entity.Student;
 import com.Airtribe.Student_Management_System.Entity.Teacher;
+import com.Airtribe.Student_Management_System.Helper.DepartmentRequestDTO;
 import com.Airtribe.Student_Management_System.ServiceImpl.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @PostMapping("/addDepartment")
-    public ResponseEntity<Department> addDepartment(Department department) {
+    public ResponseEntity<Department> addDepartment(@RequestBody DepartmentRequestDTO department) {
         Department newDepartment = departmentService.createNewDepartment(department);
         return new ResponseEntity<>(newDepartment, HttpStatus.OK);
     }
@@ -32,7 +33,7 @@ public class DepartmentController {
     }
 
     @PutMapping("/updateDepartment/{departmentId}")
-    public ResponseEntity<Department> updateDepartment(@PathVariable Long departmentId, Department department) throws Exception {
+    public ResponseEntity<Department> updateDepartment(@PathVariable Long departmentId, @RequestBody DepartmentRequestDTO department) throws Exception {
         Department updatedDepartment = departmentService.updateDepartment(departmentId, department);
         if (updatedDepartment == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -57,29 +58,29 @@ public class DepartmentController {
 
     @GetMapping("/getStudentsByDepartment/{departmentId}")
     public ResponseEntity<List<Student>> getStudentsByDepartment(@PathVariable Long departmentId) {
-        List<Student> departments = departmentService.getStudentsByDepartment(departmentId);
-        if (departments.isEmpty()) {
+        List<Student> students = departmentService.getStudentsByDepartment(departmentId);
+        if (students.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(departments, HttpStatus.OK);
+        return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
     @GetMapping("/getTeachersByDepartment/{departmentId}")
     public ResponseEntity<List<Teacher>> getTeachersByDepartment(@PathVariable Long departmentId) {
-        List<Teacher> departments = departmentService.getTeachersByDepartment(departmentId);
-        if (departments.isEmpty()) {
+        List<Teacher> teachers = departmentService.getTeachersByDepartment(departmentId);
+        if (teachers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(departments, HttpStatus.OK);
+        return new ResponseEntity<>(teachers, HttpStatus.OK);
     }
 
     @GetMapping("/getCoursesByDepartment/{departmentId}")
     public ResponseEntity<List<Course>> getCoursesByDepartment(@PathVariable Long departmentId) {
-        List<Course> departments = departmentService.getCoursesByDepartment(departmentId);
-        if (departments.isEmpty()) {
+        List<Course> courses = departmentService.getCoursesByDepartment(departmentId);
+        if (courses.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(departments, HttpStatus.OK);
+        return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
 }

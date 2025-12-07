@@ -1,5 +1,6 @@
 package com.Airtribe.Student_Management_System.Entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -16,12 +17,15 @@ public class Department
     private String description;
 
     @OneToMany(mappedBy = "department")
+    @JsonManagedReference("dept-teacher")
     private List<Teacher> teachers = new ArrayList<>();
 
     @OneToMany(mappedBy = "department")
+    @JsonManagedReference("dept-student")
     private List<Student> students = new ArrayList<>();
 
     @OneToMany(mappedBy = "department")
+    @JsonManagedReference("dept-course")
     private List<Course> courses = new ArrayList<>();
 
     public Long getId() {

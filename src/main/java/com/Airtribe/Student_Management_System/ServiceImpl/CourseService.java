@@ -4,8 +4,10 @@ import com.Airtribe.Student_Management_System.Entity.Course;
 import com.Airtribe.Student_Management_System.Entity.Enrollment;
 import com.Airtribe.Student_Management_System.Entity.Student;
 import com.Airtribe.Student_Management_System.Entity.Teacher;
+import com.Airtribe.Student_Management_System.Helper.CourseRequestDTO;
 import com.Airtribe.Student_Management_System.Helper.Status;
 import com.Airtribe.Student_Management_System.Repository.CourseRepository;
+import com.Airtribe.Student_Management_System.Repository.DepartmentRepository;
 import com.Airtribe.Student_Management_System.Repository.EnrollmentRepository;
 import com.Airtribe.Student_Management_System.Repository.TeacherRepository;
 import com.Airtribe.Student_Management_System.Service.ICourseService;
@@ -28,15 +30,22 @@ public class CourseService implements ICourseService
     @Autowired
     private EnrollmentRepository enrollmentRepository;
 
+    @Autowired
+    private DepartmentRepository departmentRepository;
+
     @Override
-    public Course createNewCourse(Course course) {
+    public Course createNewCourse(CourseRequestDTO course) {
         Course newCourse = new Course();
 
         newCourse.setCourseCode(course.getCourseCode());
         newCourse.setCourseName(course.getCourseName());
         newCourse.setCourseDescription(course.getCourseDescription());
-        newCourse.setDepartment(course.getDepartment());
-        newCourse.setTeacher(course.getTeacher());
+        if (course.getDepartmentId() != 0) {
+            newCourse.setDepartment(departmentRepository.findById(course.getDepartmentId()).get());
+        }
+        if (course.getTeacherId() != 0){
+            newCourse.setTeacher(teacherRepository.findById(course.getTeacherId()).get());
+        }
         Course savedCourse = courseRepository.save(newCourse);
 
         return savedCourse;
@@ -63,15 +72,19 @@ public class CourseService implements ICourseService
     }
 
     @Override
-    public Course updateCourse(Long id, Course course) throws Exception {
+    public Course updateCourse(Long id, CourseRequestDTO course) throws Exception {
 
         Optional<Course> courseToUpdate = courseRepository.findById(id);
         if (courseToUpdate.isPresent()) {
             courseToUpdate.get().setCourseCode(course.getCourseCode());
             courseToUpdate.get().setCourseName(course.getCourseName());
             courseToUpdate.get().setCourseDescription(course.getCourseDescription());
-            courseToUpdate.get().setDepartment(course.getDepartment());
-            courseToUpdate.get().setTeacher(course.getTeacher());
+            if (course.getDepartmentId() != 0) {
+                courseToUpdate.get().setDepartment(departmentRepository.findById(course.getDepartmentId()).get());
+            }
+            if (course.getTeacherId() != 0){
+                courseToUpdate.get().setTeacher(teacherRepository.findById(course.getTeacherId()).get());
+            }
             return courseRepository.save(courseToUpdate.get());
         }
         throw new Exception("Course does not exist with that id" + id);
@@ -84,7 +97,7 @@ public class CourseService implements ICourseService
             return "Course does not exist with that id";
         }
 
-        List<Enrollment> enrollments = enrollmentRepository.findByCourse_IdAndStatus(id, Status.Active);
+        List<Enrollment> enrollments = enrollmentRepository.findByCourse_IdAndStatus(id, Status.ACTIVE);
         if (!enrollments.isEmpty()) {
             return "Course has active enrolled students and cannot be deleted";
         }
@@ -136,7 +149,7 @@ public class CourseService implements ICourseService
         }
         course.get().setTeacher(teacher.get());
         courseRepository.save(course.get());
-        return "";
+        return "Teacher assigned to the course successfully";
     }
 
 
@@ -144,7 +157,7 @@ public class CourseService implements ICourseService
     @Override
     public List<Student> getStudentEnrolledInCourse(Long courseId) {
 
-        List<Enrollment> enrollments = enrollmentRepository.findByCourse_IdAndStatus(courseId, Status.Active);
+        List<Enrollment> enrollments = enrollmentRepository.findByCourse_IdAndStatus(courseId, Status.ACTIVE);
         if (!enrollments.isEmpty()) {
             var res =  enrollments.stream().map(Enrollment::getStudent).toList();
             return res;

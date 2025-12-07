@@ -1,5 +1,7 @@
 package com.Airtribe.Student_Management_System.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -22,9 +24,11 @@ public class Teacher
 
     @ManyToOne
     @JoinColumn(name = "department_id")
+    @JsonBackReference("dept-teacher")
     private Department department;
 
     @OneToMany(mappedBy = "teacher")
+    @JsonManagedReference("teacher-courses")
     private List<Course> courses = new ArrayList<>();
 
     private String specialization;

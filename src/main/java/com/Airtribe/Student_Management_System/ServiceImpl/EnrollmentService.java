@@ -44,7 +44,7 @@ public class EnrollmentService implements IEnrollmentService
         Enrollment enrollment = new Enrollment();
         enrollment.setStudent(student.get());
         enrollment.setCourse(course.get());
-        enrollment.setStatus(Status.Active);
+        enrollment.setStatus(Status.ACTIVE);
         Enrollment newEnrollment = enrollmentRepository.save(enrollment);
 
         return newEnrollment;
@@ -78,7 +78,7 @@ public class EnrollmentService implements IEnrollmentService
 
     @Override
     public List<Student> getActiveStudentsByCourse(Long courseId) {
-        List<Enrollment> enrollments = enrollmentRepository.findByCourse_IdAndStatus(courseId, Status.Active);
+        List<Enrollment> enrollments = enrollmentRepository.findByCourse_IdAndStatus(courseId, Status.ACTIVE);
         if(!enrollments.isEmpty())
             return enrollments.stream().map(Enrollment::getStudent).toList();
         return List.of();

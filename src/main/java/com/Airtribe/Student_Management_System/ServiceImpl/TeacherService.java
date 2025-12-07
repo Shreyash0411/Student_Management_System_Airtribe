@@ -2,12 +2,15 @@ package com.Airtribe.Student_Management_System.ServiceImpl;
 
 import com.Airtribe.Student_Management_System.Entity.Course;
 import com.Airtribe.Student_Management_System.Entity.Teacher;
+import com.Airtribe.Student_Management_System.Helper.TeacherRequestDTO;
 import com.Airtribe.Student_Management_System.Repository.CourseRepository;
+import com.Airtribe.Student_Management_System.Repository.DepartmentRepository;
 import com.Airtribe.Student_Management_System.Repository.TeacherRepository;
 import com.Airtribe.Student_Management_System.Service.ITeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,10 +21,13 @@ public class TeacherService implements ITeacherService {
     private TeacherRepository teacherRepository;
 
     @Autowired
+    private DepartmentRepository departmentRepository;
+
+    @Autowired
     private CourseRepository courseRepository;
 
     @Override
-    public Teacher createTeacher(Teacher teacher) {
+    public Teacher createTeacher(TeacherRequestDTO teacher) {
         Teacher newTeacher = new Teacher();
 
         newTeacher.setFirstName(teacher.getFirstName());
@@ -30,8 +36,12 @@ public class TeacherService implements ITeacherService {
         newTeacher.setPhoneNo(teacher.getPhoneNo());
         newTeacher.setBirthDate(teacher.getBirthDate());
         newTeacher.setSpecialization(teacher.getSpecialization());
-        newTeacher.setDepartment(teacher.getDepartment());
-        newTeacher.setCreatedAt(teacher.getCreatedAt());
+
+        if (teacher.getDepartmentId() != 0) {
+            newTeacher.setDepartment(departmentRepository.findById(teacher.getDepartmentId()).get());
+        }
+
+        newTeacher.setCreatedAt(LocalDateTime.now());
 
         Teacher savedTeacher = teacherRepository.save(newTeacher);
         return  savedTeacher;
@@ -74,21 +84,44 @@ public class TeacherService implements ITeacherService {
     }
 
     @Override
-    public Teacher updateTeacher(Long id, Teacher teacher) throws Exception {
+    public Teacher updateTeacher(Long id, TeacherRequestDTO teacher) throws Exception {
 
-        Optional<Teacher> optionalTeacher = teacherRepository.findById(id);
-       Teacher existingTeacher = optionalTeacher.get();
-        existingTeacher.setFirstName(teacher.getFirstName());
-        existingTeacher.setLastName(teacher.getLastName());
-        existingTeacher.setEmail(teacher.getEmail());
-        existingTeacher.setPhoneNo(teacher.getPhoneNo());
-        existingTeacher.setBirthDate(teacher.getBirthDate());
-        existingTeacher.setSpecialization(teacher.getSpecialization());
-        existingTeacher.setDepartment(teacher.getDepartment());
-        existingTeacher.setModifyAt(teacher.getModifyAt());
+        Teacher existingTeacher = teacherRepository.findById(id)
+                .orElseThrow(() -> new Exception("Teacher not found with id: " + id));
+
+        if (teacher.getFirstName() != null && !teacher.getFirstName().isBlank()) {
+            existingTeacher.setFirstName(teacher.getFirstName());
+        }
+
+        if (teacher.getLastName() != null && !teacher.getLastName().isBlank()) {
+            existingTeacher.setLastName(teacher.getLastName());
+        }
+
+        if (teacher.getEmail() != null && !teacher.getEmail().isBlank()) {
+            existingTeacher.setEmail(teacher.getEmail());
+        }
+
+        if (teacher.getPhoneNo() != null && !teacher.getPhoneNo().isBlank()) {
+            existingTeacher.setPhoneNo(teacher.getPhoneNo());
+        }
+
+        if (teacher.getBirthDate() != null) {
+            existingTeacher.setBirthDate(teacher.getBirthDate());
+        }
+
+        if (teacher.getSpecialization() != null && !teacher.getSpecialization().isBlank()) {
+            existingTeacher.setSpecialization(teacher.getSpecialization());
+        }
+
+        if (teacher.getDepartmentId() != 0) {
+            existingTeacher.setDepartment(departmentRepository.findById(teacher.getDepartmentId()).get());
+        }
+
+        existingTeacher.setModifyAt(LocalDateTime.now());
 
         return teacherRepository.save(existingTeacher);
     }
+
 
     @Override
     public String deleteTeacher(Long id) {

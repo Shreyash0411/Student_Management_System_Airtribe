@@ -2,6 +2,7 @@ package com.Airtribe.Student_Management_System.Controller;
 
 import com.Airtribe.Student_Management_System.Entity.Course;
 import com.Airtribe.Student_Management_System.Entity.Teacher;
+import com.Airtribe.Student_Management_System.Helper.TeacherRequestDTO;
 import com.Airtribe.Student_Management_System.Service.ITeacherService;
 import com.Airtribe.Student_Management_System.ServiceImpl.TeacherService;
 import org.apache.coyote.Response;
@@ -21,7 +22,7 @@ public class TeacherController {
     private ITeacherService teacherService;
 
     @PostMapping("/addTeacher")
-    public ResponseEntity<Teacher> addTeacher(Teacher teacher) {
+    public ResponseEntity<Teacher> addTeacher(@RequestBody TeacherRequestDTO teacher) {
         Teacher newTeacher = teacherService.createTeacher(teacher);
         return new ResponseEntity<>(newTeacher, HttpStatus.OK);
     }
@@ -63,7 +64,7 @@ public class TeacherController {
     }
 
     @PutMapping("updateTeacher/{teacherId}")
-    public ResponseEntity<Teacher> updateTeacher(@PathVariable Long teacherId, @RequestBody Teacher teacher) throws Exception {
+    public ResponseEntity<Teacher> updateTeacher(@PathVariable Long teacherId, @RequestBody TeacherRequestDTO teacher) throws Exception {
         Teacher existingTeacher = teacherService.getTeacherById(teacherId);
         if (existingTeacher == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

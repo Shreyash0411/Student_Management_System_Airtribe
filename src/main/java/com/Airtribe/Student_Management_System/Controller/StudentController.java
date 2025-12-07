@@ -1,5 +1,6 @@
 package com.Airtribe.Student_Management_System.Controller;
 import com.Airtribe.Student_Management_System.Entity.Student;
+import com.Airtribe.Student_Management_System.Helper.StudentRequestDTO;
 import com.Airtribe.Student_Management_System.Service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ public class StudentController
     private IStudentService studentService;
 
     @PostMapping("/addStudent")
-    public ResponseEntity<Student> addStudent(@RequestBody Student student){
+    public ResponseEntity<Student> addStudent(@RequestBody StudentRequestDTO student){
         Student newStudent = studentService.createNewStudent(student);
         return new ResponseEntity<>(newStudent,HttpStatus.OK);
     }
@@ -40,8 +41,11 @@ public class StudentController
     }
 
     @PutMapping("/updateStudent/{studentId}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long studentId,@RequestBody Student student) throws Exception{
+    public ResponseEntity<Student> updateStudent(@PathVariable Long studentId,@RequestBody StudentRequestDTO student) throws Exception{
+
         Student updatedStudent = studentService.updateStudent(studentId,student);
+        System.out.println("gender issue");
+
         return new ResponseEntity<>(updatedStudent,HttpStatus.OK);
     }
 

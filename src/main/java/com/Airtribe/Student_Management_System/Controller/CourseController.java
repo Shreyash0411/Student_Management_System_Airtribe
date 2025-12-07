@@ -2,6 +2,7 @@ package com.Airtribe.Student_Management_System.Controller;
 
 import com.Airtribe.Student_Management_System.Entity.Course;
 import com.Airtribe.Student_Management_System.Entity.Student;
+import com.Airtribe.Student_Management_System.Helper.CourseRequestDTO;
 import com.Airtribe.Student_Management_System.Service.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ public class CourseController {
     private ICourseService courseService;
 
     @PostMapping("/addCourse")
-    public ResponseEntity<Course> addCourse(Course course) {
+    public ResponseEntity<Course> addCourse(@RequestBody CourseRequestDTO course) {
         Course newCourse = courseService.createNewCourse(course);
         return new ResponseEntity<>(newCourse, HttpStatus.OK);
     }
@@ -36,7 +37,7 @@ public class CourseController {
     }
 
     @PutMapping("/updateCourse/{courseId}")
-    public ResponseEntity<Course> updateCourse(@PathVariable Long courseId, Course course) throws Exception {
+    public ResponseEntity<Course> updateCourse(@PathVariable Long courseId, @RequestBody CourseRequestDTO course) throws Exception {
         Course updatedCourse = courseService.updateCourse(courseId, course);
         return new ResponseEntity<>(updatedCourse, HttpStatus.OK);
     }

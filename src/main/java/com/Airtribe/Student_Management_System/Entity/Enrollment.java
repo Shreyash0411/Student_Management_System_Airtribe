@@ -1,6 +1,7 @@
 package com.Airtribe.Student_Management_System.Entity;
 
 import com.Airtribe.Student_Management_System.Helper.Status;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -13,10 +14,12 @@ public class Enrollment {
 
     @ManyToOne
     @JoinColumn(name = "student_id")
+    @JsonBackReference("student-enrollment")
     private Student student;
 
     @ManyToOne
     @JoinColumn(name = "course_id")
+    @JsonBackReference("course-enrollment")
     private Course course;
 
     private LocalDate enrollmentDate;
