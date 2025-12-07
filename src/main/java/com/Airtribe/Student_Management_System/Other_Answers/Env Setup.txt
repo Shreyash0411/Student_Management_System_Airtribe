@@ -1,0 +1,30 @@
+after downloading the jdk from the oracle website 
+i installed it in my C Drive 
+by following the basic steps of setting up the location of install and giving the 
+permit
+
+once the installation, i decided to setup the env variable 
+
+Enviroment Variable Setup
+
+Step => 1 to setup the env variable, you can just search enviroment variable 
+in the window search, and an edit enviromment variable option will appear
+
+Step => 2 click on the enviroment variable button at the bottom,
+
+Step => in both the user and system variable you can click new 
+where a minor dialog will appear, 
+
+Step 4 => setup the variable name as JAVA_HOME
+Step 5 => Setup the Variable value as "C:\Program Files\Java\jdk-23", as this is 
+the location where my jdk is installed 
+
+once done click on applly
+
+Open terminal 
+and write the command 
+java -version
+
+if the env is setup correctly it will show you the version number of the jdk installed
+else you might need to recheck the variable setup
+

@@ -1,0 +1,16 @@
+Write Once and Run Everywhere
+
+Java application follow the concept of Write Once and Run Everywhere
+this means that once the app is devloped it becomes platform independent
+and can run on any sort of Platform without any external adjustment.
+
+This is possible because of JVM
+unlike other languages where once the program are compiled, they are 
+converted to the code that can be understood by the platform only so for another
+platform to run that program it needs to be compiled and some minor 
+adjustments are required before running into new platform,
+
+JAVA does something different, it converts the code into bytecode
+or machine code which is then interpreted by the JVM
+so once the JAVA programs are compiled into generates the bytecode which
+can be run anywhere as long as the machine as JVM installed in it

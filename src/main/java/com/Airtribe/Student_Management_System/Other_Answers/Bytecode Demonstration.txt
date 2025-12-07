@@ -1,0 +1,77 @@
+Demostration of Bytecode Execution Process
+
+1. Class Loader Perform
+the JVM uses the class loader system to bring the .class files that is in 
+bytecode format into the memory
+	a. Loads class into the JVM
+	b. Verify the correctness of Bytecode
+	c. Prepare and resolve the classes
+	
+Key Class Loader
+	a. Bootstrap Class Loader
+		=> Loads core java classes [java.util], [java.lang]
+	
+	b. Extension Class Loader 
+		=> Loads Classes from JAVA_HOME
+	
+	c. Application Class Loader 
+		=> Loads classes from the classpath
+	
+Linking 
+	a. Verification
+		=> checks if bytecode is valid and secure
+	
+	b. Prepartion
+		=> Allocates memory for static variables
+	
+	c. Resolution
+		=> Replaces symbolic refrences with direct refrences
+
+Initialization 
+	=> Executes static block and initializes static variables
+	
+
+
+2. Runtime Data Areas
+Handles the memory management that is being during used the program 
+execution
+
+a. Method Area
+=> Stores class level data, such as class structure method data, static
+variables
+
+b. Heap Area 
+=> Stores object and arrays and the garbage collectors does the 
+cleanup in heap area
+
+c. Stack Area
+=> It stores the method call frames, local variables and operand stack,
+ returning values of the functions,( Recursive Functions )
+ 
+d. PC Register 
+=> Stores the address of the currently executing instruction
+
+e. Native Method Stack
+=> Executes native code
+
+3. Execution Engine
+Once the class is loaded and memory is allocated, the execution engine
+executes the bytecode
+
+	a. Interpreter
+	=> Reads and executes bytecode line by line.
+	=> It is faster in startup but slower in execution
+	
+	b. JIT Compiler 
+	=> Converts frequently executed bytecode into the native machine code
+	=> faster than interpreter but more time taking overall
+	
+	c. Garbage Collector
+	=> Automatically removes unused object from the heap, that are being stranded 
+	for long time, 
+	
+4. Native Interface 
+=> Help java call the native code via JNI
+
+5. Native Method Libraries 
+=> Stores .dll, .do or .dylib files.

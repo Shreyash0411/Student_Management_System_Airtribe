@@ -1,0 +1,24 @@
+JIT Compiler vs Interpreter
+
+Interpreter : 
+The interpreter reads the bytecode line by line and convert it to the 
+machine code on the fly 
+once the machine code is ready it executes it immediately
+
+It is good for small programs, and programs that only runs once,
+as it has a very fast startup
+
+but for the repeated code it is very slow
+for example recursive functions, loop and multiple time same mmethod calls
+because of this it has to execute the same code again and again
+
+
+JIT Compiler [JIT Compiler]
+It detects those part of the codes that are running multiple times the program
+and compile those together in bytecode and native machine code
+Stores the memory and runs directly
+
+it is much faster than the interpreter, as it eliminates the repeated 
+execution of the code,
+the entire code is executed all together rather than it being line by line
+it is slow and time taking process as the compilation takes time 
